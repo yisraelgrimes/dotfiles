@@ -1,0 +1,13 @@
+[user]
+	name = Yisrael Grimes
+	email = yisraelgrimes@gmail.com
+[core]
+	excludesfile = /Users/yis/_dotfiles/zsh/.gitignore_global
+	autocrlf = false
+	eol = LF
+	fileMode = false
+[difftool "DeltaWalker"]
+	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
+	path =
+[diff]
+	renamelimit = 5000

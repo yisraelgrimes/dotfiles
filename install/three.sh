@@ -24,3 +24,8 @@ if [[ $REPLY =~ ^[y]$ ]]; then
 	include "./apps/other_apps.sh"
 	success "Other apps are installed"
 fi
+
+
+# Sync Music
+say "Open iTunes and authorize your computer."
+waiting "Don't forget to add your music back to your library."

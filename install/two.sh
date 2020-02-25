@@ -92,6 +92,62 @@ if [[ $REPLY =~ ^[y]$ ]]; then
 fi
 
 
-# Sync Music
-say "Open iTunes and authorize your computer."
-waiting "Don't forget to add your music back to your library."
+# Sketch
+ask_yn "Set up Sketch Resources? Make sure you have already opened Sketch and registered the app."
+if [[ $REPLY =~ ^[y]$ ]]; then
+	local_sketch_dir="$HOME/Library/Application Support/com.bohemiancoding.sketch3"
+	sync_sketch_dir="$SYNC_DIR/files/Users/yis/Library/Application Support/com.bohemiancoding.sketch3"
+
+	if [ ! -d "$HOME/Git/design" ]; then mkdir "$HOME/Git/design"; fi
+
+	# Templates
+	if [ ! -d "$HOME/Git/design/sketch-templates" ]; then
+		doing "Cloning your templates Library"
+		git clone https://gitlab.com/workwithizzi/cookbook/sketch-templates.git "$HOME/Git/design/sketch-templates"
+	fi
+	if [ -d "$local_sketch_dir/Templates" ]; then
+		doing "Symlinking templates Library"
+		rm -rf "$local_sketch_dir/Templates"
+		ln -s "$HOME/Git/design/sketch-templates" "$local_sketch_dir/Templates"
+	fi
+
+	# Plugins
+	if [ -d "$local_sketch_dir/Plugins" ]; then
+		rm -rf "$local_sketch_dir/Plugins"
+	fi
+	if [ -d "$HOME/Dropbox/sketch-plugins/Plugins" ]; then
+		ln -s "$HOME/Dropbox/sketch-plugins/Plugins" "$local_sketch_dir/Plugins"
+	fi
+
+	# Midnight Plugin
+	if [ -d "$local_sketch_dir/Midnight" ]; then
+		rm -rf "$local_sketch_dir/Midnight"
+	fi
+	if [ -d "$sync_sketch_dir/Midnight" ]; then
+		ln -s "$sync_sketch_dir/Midnight" "$local_sketch_dir/Midnight"
+	fi
+
+	# Panels
+	if [ -d "$local_sketch_dir/Panels" ]; then
+		rm -rf "$local_sketch_dir/Panels"
+	fi
+	if [ -d "$sync_sketch_dir/Panels" ]; then
+		ln -s "$sync_sketch_dir/Panels" "$local_sketch_dir/Panels"
+	fi
+
+	# PluginsWarehouse
+	if [ -d "$local_sketch_dir/PluginsWarehouse" ]; then
+		rm -rf "$local_sketch_dir/PluginsWarehouse"
+	fi
+	if [ -d "$sync_sketch_dir/PluginsWarehouse" ]; then
+		ln -s "$sync_sketch_dir/PluginsWarehouse" "$local_sketch_dir/PluginsWarehouse"
+	fi
+
+	# Runner
+	if [ -d "$local_sketch_dir/Runner" ]; then
+		rm -rf "$local_sketch_dir/Runner"
+	fi
+	if [ -d "$sync_sketch_dir/Runner" ]; then
+		ln -s "$sync_sketch_dir/Runner" "$local_sketch_dir/Runner"
+	fi
+fi

@@ -405,6 +405,9 @@ autoperiod() {
 # Open ZSH Files
 openzsh() {
 	editor "$ZDOTDIR/.zshrc"
+	editor "$ZDOTDIR/wip.sh"
+	editor "$ZDOTDIR/git-commands.sh"
+	editor "$SYNC_DIR/manual_sync/tacos"
 }
 
 # Check open ports

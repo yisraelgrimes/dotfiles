@@ -7,7 +7,6 @@
 # If file is found, then source it
 include() { [[ -f "$1" ]] && source "$1"; }
 
-
 # #####################################
 # Setup $PATH
 # #####################################
@@ -16,7 +15,6 @@ include() { [[ -f "$1" ]] && source "$1"; }
 CODE="/Applications/Visual Studio Code.app/Contents/Resources/app/bin"
 
 export PATH="$PATH:$CODE"
-
 
 # #####################################
 # zsh options
@@ -51,7 +49,6 @@ plugins=(
 )
 
 source $ZSH/oh-my-zsh.sh
-
 
 # Use Case Insensitive Globbing
 setopt NO_CASE_GLOB
@@ -94,12 +91,6 @@ setopt HIST_VERIFY
 setopt CORRECT
 setopt CORRECT_ALL
 
-
-
-
-
-
-
 # #####################################
 # Completion
 # #####################################
@@ -114,8 +105,6 @@ zstyle ':completion:*' expand prefix suffix
 # Initialize zsh completion system. @see: t.ly/7J6B2
 autoload -Uz compinit && compinit
 
-
-
 # #####################################
 # File Paths
 # #####################################
@@ -123,14 +112,11 @@ autoload -Uz compinit && compinit
 # Where synced files are stored in Dropbox
 SYNC_DIR="$HOME/Dropbox/jibesync"
 
-
 # #####################################
 # Load Files
 # #####################################
 include "$HOME/_dotfiles/zsh/git-commands.sh"
 include "$HOME/_dotfiles/zsh/wip.sh"
-
-
 
 # #####################################
 # Shortcuts & Variables
@@ -166,7 +152,6 @@ shorttime() {
 # Copy the current directory path to the clipboard
 alias copypath="pwd|pbcopy"
 
-
 # #####################################
 # Working with Files
 # #####################################
@@ -180,11 +165,21 @@ alias ...="cd ../../"
 # G - use Color
 alias ls="ls -AFG"
 
+# List files in dir
+# A - include hidden files
+# F - Include "/" for folders
+# G - use Color
+alias lsa="ls -AFG"
+
+# Do stuff above and:
+# l - list permissions
+alias lsl="ls -AFGl"
+
 # Do the stuff above and:
 # sk - print size in kilobytes
 # S  - Sort by size
 # r  - Reverse the sort so largest is on top
-alias lss="ls -AFGskSr"
+alias lss="ls -AFGskSrl"
 
 # cd to Desktop
 alias desk="cd $HOME/Desktop"
@@ -218,7 +213,7 @@ declutter() {
 		fi
 		cd "$cwd" || return
 	else
-        # Print help-info by default
+		# Print help-info by default
 		echo "this command will deletes 'node_modules' and '_rsync-trash' directories in $HOME/Git"
 		echo "If you want to do this, run the command again with '-Y' flag."
 		echo "Ex: <declutter -Y>"
@@ -249,7 +244,6 @@ sync-node() {
 	fi
 	unset src dest
 }
-
 
 # #####################################
 # Apps & Command-Line Tools
@@ -285,7 +279,6 @@ alias dcls="docker container ls --format 'table {{.ID}}\t⎥ {{.Image}}\t⎥ {{.
 alias dclsa="docker container ls -a --format 'table {{.ID}}\t⎥ {{.Image}}\t⎥ {{.Names}}'"
 alias dclsap="docker container ls -a --format 'table {{.ID}}\t⎥ {{.Image}}\t⎥ {{.Command}}\t⎥ {{.RunningFor}}\t⎥ {{.Status}}\t⎥ {{.Ports}}\t⎥ {{.Names}}'"
 
-
 # Code Editor: Default opens the current directory, otherwise opens the given path
 # VSCode
 vs() { if [ $# -eq 0 ]; then code .; else code "$@"; fi; }
@@ -314,7 +307,6 @@ kracken() {
 	fi
 	unset repopath
 }
-
 
 # #####################################
 # Toggle system prefs & Controls
@@ -397,7 +389,6 @@ autoperiod() {
 	fi
 }
 
-
 # #####################################
 # Some other helpful things
 # #####################################
@@ -452,13 +443,13 @@ sketch_dev() {
 	if [ "$*" == "--help" ]; then
 		echo "This function enables dev-mode for sketch.app (for plugin dev)"
 		echo "Options: on, off"
-        echo "Use 'on' to keep sketch from caching plugins (for plugin dev). Use 'off' to go back to normal."
+		echo "Use 'on' to keep sketch from caching plugins (for plugin dev). Use 'off' to go back to normal."
 
 	else
 		if [ "$*" == "on" ]; then
 			defaults write ~/Library/Preferences/com.bohemiancoding.sketch3.plist AlwaysReloadScript -bool YES
 		fi
-        if [ "$*" == "off" ]; then
+		if [ "$*" == "off" ]; then
 			defaults write ~/Library/Preferences/com.bohemiancoding.sketch3.plist AlwaysReloadScript -bool NO
 		fi
 	fi
@@ -484,7 +475,6 @@ rip_audio() {
 
 	unset cwd
 }
-
 
 # Play Sounds:
 # alias taskready='afplay /System/Library/Sounds/Hero.aiff'

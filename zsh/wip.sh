@@ -70,53 +70,57 @@ placeholder() {
 # #####################################
 function peep() {
 	dir="./.vscode"
-	file="settings.json"
-	fullpath="$dir/$file"
 
 	if [ ! -e "$dir" ]; then
 		mkdir "$dir"
 	fi
 
-	if [ ! -e "$fullpath" ]; then
+	if [ ! -e "${dir}/.gitignore" ]; then
+		echo "**" >> "${dir}/.gitignore"
+	fi
+
+	if [ ! -e "${dir}/settings.json" ]; then
 		{
 			echo "{"
 			echo "  \"files.exclude\": {"
-			echo "    \"node_modules/\": true,"
-			echo "    \".env\": true,"
-			echo "    \"sanity.json\": true,"
-			echo "    \"lerna.json\": true,"
-			echo "    \"netlify.toml\": true,"
-			echo "    \"gulpfile.js\": true,"
-			echo "    \"package.json\": true,"
-			echo "    \"README*.md\": true,"
-			echo "    \"readme*.txt\": true,"
-			echo "    \"humans.txt\": true,"
-			echo "    \"robots.txt\": true,"
-			echo "    \".gitignore\": true,"
-			echo "    \".jshintignore\": true,"
-			echo "    \".eslintignore\": true,"
-			echo "    \".eslintrc.js\": true,"
-			echo "    \".prettierrc\": true,"
-			echo "    \".sass-lint.yml\": true,"
-			echo "    \".editorconfig\": true,"
-			echo "    \".stylishcolors\": true,"
-			echo "    \".pug-lintrc\": true,"
-			echo "    \"languages/\": true,"
-			echo "    \"LICENSE*\": true,"
-			echo "    \"yarn.lock\": true,"
-			echo "    \"package-lock.json\": true,"
+			echo "    \"**/*.vscode/\": true,"
+			echo "    \"**/*node_modules/\": true,"
+			echo "    \"**/*yarn.lock\": true,"
+			echo "    \"**/*package-lock.json\": true,"
+			echo "    \"**/*package.json\": true,"
+			echo "    \"**/*.env\": true,"
+			echo "    \"**/*sanity.json\": true,"
+			echo "    \"**/*lerna.json\": true,"
+			echo "    \"**/*netlify.toml\": true,"
+			echo "    \"**/*gulpfile.js\": true,"
+			echo "    \"**/*README*.md\": true,"
+			echo "    \"**/*readme*.txt\": true,"
+			echo "    \"**/*humans.txt\": true,"
+			echo "    \"**/*robots.txt\": true,"
+			echo "    \"**/*.gitignore\": true,"
+			echo "    \"**/*.gitkeep\": true,"
+			echo "    \"**/*.jshintignore\": true,"
+			echo "    \"**/*.eslintignore\": true,"
+			echo "    \"**/*.eslintrc.js\": true,"
+			echo "    \"**/*.prettierrc\": true,"
+			echo "    \"**/*.sass-lint.yml\": true,"
+			echo "    \"**/*.editorconfig\": true,"
+			echo "    \"**/*.stylishcolors\": true,"
+			echo "    \"**/*.pug-lintrc\": true,"
+			echo "    \"**/*languages/\": true,"
+			echo "    \"**/*LICENSE*\": true,"
 			echo "    \"*.log\": true,"
-			echo "    \".git/\": true,"
-			echo "    \"*.ico\": true,"
-			echo "    \"*.png\": true,"
-			echo "    \"*.jpg\": true"
+			echo "    \"**/*.git/\": true,"
+			echo "    \"**/*.ico\": true,"
+			echo "    \"**/*.png\": true,"
+			echo "    \"**/*.jpg\": true"
 			echo "  }"
 			echo "}"
-		} >> "$fullpath"
+		} >> "${dir}/settings.json"
 	fi
 
 	# Open file in editor
-	editor "$fullpath"
+	editor "${dir}/settings.json"
 }
 
 

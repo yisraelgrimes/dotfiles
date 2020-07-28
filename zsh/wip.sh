@@ -9,6 +9,12 @@ pb() {
   echo "$@" | pbcopy
 }
 
+# Copy History to clipboard
+history_copy() {
+	history -i
+  history -i | pbcopy
+}
+
 
 sssh() {
 	if [[ -z "$1" ]] || [[ "$1" == "help" ]]; then

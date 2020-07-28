@@ -15,8 +15,14 @@ include() { [[ -f "$1" ]] && source "$1"; }
 # VSCode command line path
 CODE="/Applications/Visual Studio Code.app/Contents/Resources/app/bin"
 
-export PATH="$PATH:$CODE"
+# Laravel command path:
+LARAVEL="$HOME/.composer/vendor/bin"
 
+# Icu4c package (something for PHP dev)
+# Icu4c="/usr/local/opt/icu4c/bin"
+
+# export PATH="$CODE:$LARAVEL:$Icu4c:$PATH"
+export PATH="$CODE:$LARAVEL:$PATH"
 
 # #####################################
 # zsh options

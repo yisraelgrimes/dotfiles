@@ -58,12 +58,14 @@ plugins=(
 
 source $ZSH/oh-my-zsh.sh
 
-
 # Use Case Insensitive Globbing
 setopt NO_CASE_GLOB
 
 # Auto CD to path. Removes the need for `cd` in the command
 setopt AUTO_CD
+
+# Don't enter command lines into the history list if they are duplicates of the previous event.
+setopt HIST_IGNORE_DUPS
 
 # Save shell history upon exiting shell
 HISTFILE=${ZDOTDIR:-$HOME}/.zsh_history
@@ -72,13 +74,14 @@ HISTFILE=${ZDOTDIR:-$HOME}/.zsh_history
 setopt EXTENDED_HISTORY
 
 # Only save 3000 commands in shell history
-SAVEHIST=3000
+SAVEHIST=5000
 
 # Only save 200 commands in current shell session
-HISTSIZE=200
+HISTSIZE=1000
 
 # Share shell history across multiple zsh sessions
 setopt SHARE_HISTORY
+
 # Append shell history instead of overwriting it
 setopt APPEND_HISTORY
 

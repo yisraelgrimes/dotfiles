@@ -189,11 +189,21 @@ alias ...="cd ../../"
 # G - use Color
 alias ls="ls -AFG"
 
+# List files in dir
+# A - include hidden files
+# F - Include "/" for folders
+# G - use Color
+alias lsa="ls -AFG"
+
+# Do stuff above and:
+# l - list permissions
+alias lsl="ls -AFGl"
+
 # Do the stuff above and:
 # sk - print size in kilobytes
 # S  - Sort by size
 # r  - Reverse the sort so largest is on top
-alias lss="ls -AFGskSr"
+alias lss="ls -AFGskSrl"
 
 # cd to Desktop
 alias desk="cd $HOME/Desktop"
@@ -227,7 +237,7 @@ declutter() {
 		fi
 		cd "$cwd" || return
 	else
-        # Print help-info by default
+		# Print help-info by default
 		echo "this command will deletes 'node_modules' and '_rsync-trash' directories in $HOME/Git"
 		echo "If you want to do this, run the command again with '-Y' flag."
 		echo "Ex: <declutter -Y>"
@@ -287,13 +297,15 @@ GITCLIENT="GitKraken"
 
 # Docker CLI Aliases
 alias d="docker"
-alias dcontainer="docker container"
+alias dcon="docker container"
 alias dimage="docker image"
-alias dcompose="docker-compose"
+alias dcom="docker-compose"
 alias dcls="docker container ls --format 'table {{.ID}}\t⎥ {{.Image}}\t⎥ {{.Names}}'"
 alias dclsa="docker container ls -a --format 'table {{.ID}}\t⎥ {{.Image}}\t⎥ {{.Names}}'"
 alias dclsap="docker container ls -a --format 'table {{.ID}}\t⎥ {{.Image}}\t⎥ {{.Command}}\t⎥ {{.RunningFor}}\t⎥ {{.Status}}\t⎥ {{.Ports}}\t⎥ {{.Names}}'"
 
+# Laravel Alias
+alias q="php artisan"
 
 # Code Editor: Default opens the current directory, otherwise opens the given path
 # VSCode
@@ -406,13 +418,16 @@ autoperiod() {
 	fi
 }
 
-
 # #####################################
 # Some other helpful things
 # #####################################
 
 # Open ZSH Files
 openzsh() {
+	editor "$ZDOTDIR/.zshrc"
+}
+
+openzsh_all() {
 	editor "$ZDOTDIR/.zshrc"
 	editor "$ZDOTDIR/wip.sh"
 	editor "$ZDOTDIR/git-commands.sh"

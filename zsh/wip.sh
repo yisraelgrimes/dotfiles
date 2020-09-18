@@ -16,30 +16,6 @@ history_copy() {
 }
 
 
-sssh() {
-	if [[ -z "$1" ]] || [[ "$1" == "help" ]]; then
-		echo "Shortcut to ssh into commonly accessed servers"
-		echo "ssh <server> <user>"
-		echo "Servers: fueled | rsn | aureus"
-		echo "User: root | basic"
-		echo "      root is default"
-	else
-		export SERVER="$1"
-		export USER="$2"
-
-		# Set default user as "root"
-		if [[ -z "$USER" ]]; then
-			USER="root"
-		fi
-		# Get the info
-		include "$SYNC_DIR/manual_sync/tacos"
-		# Do the thing
-		ssh "$USER"@"$ADDRESS"
-	fi
-	unset SERVER USER ADDRESS PW
-}
-
-
 # #####################################
 # IN PROGRESS: Download placeholder image from placeholder.com
 # #####################################

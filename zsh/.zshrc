@@ -1,4 +1,4 @@
-#! /usr/bin/zsh
+#! /usr/bin/bash
 #
 # shellcheck disable=SC1090
 # shellcheck disable=SC1091
@@ -431,7 +431,6 @@ openzsh_all() {
 	editor "$ZDOTDIR/.zshrc"
 	editor "$ZDOTDIR/wip.sh"
 	editor "$ZDOTDIR/git-commands.sh"
-	editor "$SYNC_DIR/manual_sync/tacos"
 }
 
 # Check open ports
@@ -507,6 +506,49 @@ rip_audio() {
 	fi
 
 	unset cwd
+}
+
+
+local_dns() {
+	cmd="$1"
+	val="$2"
+
+	# Show all dns records
+	if [[ "$cmd" == "view" ]]; then
+		cat /etc/hosts
+
+	# Add a dns record
+	elif [[ "$cmd" == "add" ]]; then
+		if [[ ! "$val" ]]; then
+			echo "You need to add a value. Ex:"
+			echo "127.0.0.1 ::1 yoursite.test"
+		else
+			echo "$val" | sudo tee -a /etc/hosts
+		fi
+
+	# Remove a dns record
+	elif [[ "$cmd" == "remove" ]]; then
+		if [[ ! "$val" ]]; then
+			echo "You need to add a value. Ex:"
+			echo "127.0.0.1 ::1 yoursite.test"
+		else
+			sudo sed -i '' "s/$val//g" /etc/hosts
+		fi
+
+	# Send help
+	else
+		echo "## Info ##"
+		echo "Example:"
+		echo "  local_dns add \"127.0.0.1 ::1 yoursite.test\""
+		echo ""
+		echo "Commands:"
+		echo "  view:   Shows all current DNS records"
+		echo "  add:    Adds a specific DNS record"
+		echo "  remove: Removes a specific DNS record"
+		echo ""
+		echo "Options:"
+		echo "  value of the record to add or remove"
+	fi
 }
 
 

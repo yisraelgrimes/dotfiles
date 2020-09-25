@@ -1,4 +1,4 @@
-#! /usr/bin/zsh
+#! /usr/bin/bash
 #
 # shellcheck disable=SC1090
 # shellcheck disable=SC1091
@@ -6,6 +6,7 @@
 
 # If file is found, then source it
 include() { [[ -f "$1" ]] && source "$1"; }
+
 
 # #####################################
 # Setup $PATH
@@ -60,6 +61,9 @@ setopt NO_CASE_GLOB
 # Auto CD to path. Removes the need for `cd` in the command
 setopt AUTO_CD
 
+# Don't enter command lines into the history list if they are duplicates of the previous event.
+setopt HIST_IGNORE_DUPS
+
 # Save shell history upon exiting shell
 HISTFILE=${ZDOTDIR:-$HOME}/.zsh_history
 
@@ -67,13 +71,14 @@ HISTFILE=${ZDOTDIR:-$HOME}/.zsh_history
 setopt EXTENDED_HISTORY
 
 # Only save 3000 commands in shell history
-SAVEHIST=3000
+SAVEHIST=5000
 
 # Only save 200 commands in current shell session
-HISTSIZE=200
+HISTSIZE=1000
 
 # Share shell history across multiple zsh sessions
 setopt SHARE_HISTORY
+
 # Append shell history instead of overwriting it
 setopt APPEND_HISTORY
 
@@ -95,6 +100,12 @@ setopt HIST_VERIFY
 setopt CORRECT
 setopt CORRECT_ALL
 
+
+
+
+
+
+
 # #####################################
 # Completion
 # #####################################
@@ -109,6 +120,8 @@ zstyle ':completion:*' expand prefix suffix
 # Initialize zsh completion system. @see: t.ly/7J6B2
 autoload -Uz compinit && compinit
 
+
+
 # #####################################
 # File Paths
 # #####################################
@@ -116,11 +129,14 @@ autoload -Uz compinit && compinit
 # Where synced files are stored in Dropbox
 SYNC_DIR="$HOME/Dropbox/jibesync"
 
+
 # #####################################
 # Load Files
 # #####################################
 include "$HOME/_dotfiles/zsh/git-commands.sh"
 include "$HOME/_dotfiles/zsh/wip.sh"
+
+
 
 # #####################################
 # Shortcuts & Variables
@@ -155,6 +171,7 @@ shorttime() {
 
 # Copy the current directory path to the clipboard
 alias copypath="pwd|pbcopy"
+
 
 # #####################################
 # Working with Files
@@ -249,6 +266,7 @@ sync-node() {
 	unset src dest
 }
 
+
 # #####################################
 # Apps & Command-Line Tools
 # #####################################
@@ -276,12 +294,15 @@ GITCLIENT="GitKraken"
 
 # Docker CLI Aliases
 alias d="docker"
-alias dcontainer="docker container"
+alias dcon="docker container"
 alias dimage="docker image"
-alias dcompose="docker-compose"
+alias dcom="docker-compose"
 alias dcls="docker container ls --format 'table {{.ID}}\t⎥ {{.Image}}\t⎥ {{.Names}}'"
 alias dclsa="docker container ls -a --format 'table {{.ID}}\t⎥ {{.Image}}\t⎥ {{.Names}}'"
 alias dclsap="docker container ls -a --format 'table {{.ID}}\t⎥ {{.Image}}\t⎥ {{.Command}}\t⎥ {{.RunningFor}}\t⎥ {{.Status}}\t⎥ {{.Ports}}\t⎥ {{.Names}}'"
+
+# Laravel Alias
+alias q="php artisan"
 
 # Code Editor: Default opens the current directory, otherwise opens the given path
 # VSCode
@@ -311,6 +332,7 @@ kracken() {
 	fi
 	unset repopath
 }
+
 
 # #####################################
 # Toggle system prefs & Controls
@@ -400,9 +422,12 @@ autoperiod() {
 # Open ZSH Files
 openzsh() {
 	editor "$ZDOTDIR/.zshrc"
+}
+
+openzsh_all() {
+	editor "$ZDOTDIR/.zshrc"
 	editor "$ZDOTDIR/wip.sh"
 	editor "$ZDOTDIR/git-commands.sh"
-	editor "$SYNC_DIR/manual_sync/tacos"
 }
 
 # Check open ports
@@ -447,13 +472,13 @@ sketch_dev() {
 	if [ "$*" == "--help" ]; then
 		echo "This function enables dev-mode for sketch.app (for plugin dev)"
 		echo "Options: on, off"
-		echo "Use 'on' to keep sketch from caching plugins (for plugin dev). Use 'off' to go back to normal."
+        echo "Use 'on' to keep sketch from caching plugins (for plugin dev). Use 'off' to go back to normal."
 
 	else
 		if [ "$*" == "on" ]; then
 			defaults write ~/Library/Preferences/com.bohemiancoding.sketch3.plist AlwaysReloadScript -bool YES
 		fi
-		if [ "$*" == "off" ]; then
+        if [ "$*" == "off" ]; then
 			defaults write ~/Library/Preferences/com.bohemiancoding.sketch3.plist AlwaysReloadScript -bool NO
 		fi
 	fi
@@ -479,6 +504,50 @@ rip_audio() {
 
 	unset cwd
 }
+
+
+local_dns() {
+	cmd="$1"
+	val="$2"
+
+	# Show all dns records
+	if [[ "$cmd" == "view" ]]; then
+		cat /etc/hosts
+
+	# Add a dns record
+	elif [[ "$cmd" == "add" ]]; then
+		if [[ ! "$val" ]]; then
+			echo "You need to add a value. Ex:"
+			echo "127.0.0.1 ::1 yoursite.test"
+		else
+			echo "$val" | sudo tee -a /etc/hosts
+		fi
+
+	# Remove a dns record
+	elif [[ "$cmd" == "remove" ]]; then
+		if [[ ! "$val" ]]; then
+			echo "You need to add a value. Ex:"
+			echo "127.0.0.1 ::1 yoursite.test"
+		else
+			sudo sed -i '' "s/$val//g" /etc/hosts
+		fi
+
+	# Send help
+	else
+		echo "## Info ##"
+		echo "Example:"
+		echo "  local_dns add \"127.0.0.1 ::1 yoursite.test\""
+		echo ""
+		echo "Commands:"
+		echo "  view:   Shows all current DNS records"
+		echo "  add:    Adds a specific DNS record"
+		echo "  remove: Removes a specific DNS record"
+		echo ""
+		echo "Options:"
+		echo "  value of the record to add or remove"
+	fi
+}
+
 
 # Play Sounds:
 # alias taskready='afplay /System/Library/Sounds/Hero.aiff'

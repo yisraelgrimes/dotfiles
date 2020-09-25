@@ -9,28 +9,10 @@ pb() {
   echo "$@" | pbcopy
 }
 
-
-sssh() {
-	if [[ -z "$1" ]] || [[ "$1" == "help" ]]; then
-		echo "Shortcut to ssh into commonly accessed servers"
-		echo "ssh <server> <user>"
-		echo "Servers: fueled | rsn | aureus"
-		echo "User: root | basic"
-		echo "      root is default"
-	else
-		export SERVER="$1"
-		export USER="$2"
-
-		# Set default user as "root"
-		if [[ -z "$USER" ]]; then
-			USER="root"
-		fi
-		# Get the info
-		include "$SYNC_DIR/manual_sync/tacos"
-		# Do the thing
-		ssh "$USER"@"$ADDRESS"
-	fi
-	unset SERVER USER ADDRESS PW
+# Copy History to clipboard
+history_copy() {
+	history -i
+  history -i | pbcopy
 }
 
 
@@ -64,53 +46,57 @@ placeholder() {
 # #####################################
 function peep() {
 	dir="./.vscode"
-	file="settings.json"
-	fullpath="$dir/$file"
 
 	if [ ! -e "$dir" ]; then
 		mkdir "$dir"
 	fi
 
-	if [ ! -e "$fullpath" ]; then
+	if [ ! -e "${dir}/.gitignore" ]; then
+		echo "**" >> "${dir}/.gitignore"
+	fi
+
+	if [ ! -e "${dir}/settings.json" ]; then
 		{
 			echo "{"
 			echo "  \"files.exclude\": {"
-			echo "    \"node_modules/\": true,"
-			echo "    \".env\": true,"
-			echo "    \"sanity.json\": true,"
-			echo "    \"lerna.json\": true,"
-			echo "    \"netlify.toml\": true,"
-			echo "    \"gulpfile.js\": true,"
-			echo "    \"package.json\": true,"
-			echo "    \"README*.md\": true,"
-			echo "    \"readme*.txt\": true,"
-			echo "    \"humans.txt\": true,"
-			echo "    \"robots.txt\": true,"
-			echo "    \".gitignore\": true,"
-			echo "    \".jshintignore\": true,"
-			echo "    \".eslintignore\": true,"
-			echo "    \".eslintrc.js\": true,"
-			echo "    \".prettierrc\": true,"
-			echo "    \".sass-lint.yml\": true,"
-			echo "    \".editorconfig\": true,"
-			echo "    \".stylishcolors\": true,"
-			echo "    \".pug-lintrc\": true,"
-			echo "    \"languages/\": true,"
-			echo "    \"LICENSE*\": true,"
-			echo "    \"yarn.lock\": true,"
-			echo "    \"package-lock.json\": true,"
+			echo "    \"**/*.vscode/\": true,"
+			echo "    \"**/*node_modules/\": true,"
+			echo "    \"**/*yarn.lock\": true,"
+			echo "    \"**/*package-lock.json\": true,"
+			echo "    \"**/*package.json\": true,"
+			echo "    \"**/*.env\": true,"
+			echo "    \"**/*sanity.json\": true,"
+			echo "    \"**/*lerna.json\": true,"
+			echo "    \"**/*netlify.toml\": true,"
+			echo "    \"**/*gulpfile.js\": true,"
+			echo "    \"**/*README*.md\": true,"
+			echo "    \"**/*readme*.txt\": true,"
+			echo "    \"**/*humans.txt\": true,"
+			echo "    \"**/*robots.txt\": true,"
+			echo "    \"**/*.gitignore\": true,"
+			echo "    \"**/*.gitkeep\": true,"
+			echo "    \"**/*.jshintignore\": true,"
+			echo "    \"**/*.eslintignore\": true,"
+			echo "    \"**/*.eslintrc.js\": true,"
+			echo "    \"**/*.prettierrc\": true,"
+			echo "    \"**/*.sass-lint.yml\": true,"
+			echo "    \"**/*.editorconfig\": true,"
+			echo "    \"**/*.stylishcolors\": true,"
+			echo "    \"**/*.pug-lintrc\": true,"
+			echo "    \"**/*languages/\": true,"
+			echo "    \"**/*LICENSE*\": true,"
 			echo "    \"*.log\": true,"
-			echo "    \".git/\": true,"
-			echo "    \"*.ico\": true,"
-			echo "    \"*.png\": true,"
-			echo "    \"*.jpg\": true"
+			echo "    \"**/*.git/\": true,"
+			echo "    \"**/*.ico\": true,"
+			echo "    \"**/*.png\": true,"
+			echo "    \"**/*.jpg\": true"
 			echo "  }"
 			echo "}"
-		} >> "$fullpath"
+		} >> "${dir}/settings.json"
 	fi
 
 	# Open file in editor
-	editor "$fullpath"
+	editor "${dir}/settings.json"
 }
 
 

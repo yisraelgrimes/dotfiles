@@ -1,4 +1,4 @@
-#! /usr/bin/bash
+#! /usr/bin/zsh
 #
 # shellcheck disable=SC1090
 # shellcheck disable=SC1091
@@ -152,7 +152,7 @@ alias c="clear"
 OTHER_MAC="/Volumes/yis"
 
 # Reload Shell
-alias reshell="source $ZDOTDIR/.zshrc"
+alias reshell="source $ZDOTDIR/.zshrc && zsh"
 
 # Hide/show desktop icons (useful when presenting)
 alias hidedesktop="defaults write com.apple.finder CreateDesktop -bool false && killall Finder"
@@ -185,6 +185,8 @@ alias ...="cd ../../"
 # F - Include "/" for folders
 # G - use Color
 alias ls="ls -AFG"
+# Make it a single column
+alias ls1="ls -AFG"
 
 # List files in dir
 # A - include hidden files
@@ -294,12 +296,52 @@ GITCLIENT="GitKraken"
 
 # Docker CLI Aliases
 alias d="docker"
-alias dcon="docker container"
+# alias dcon="docker container"
 alias dimage="docker image"
 alias dcom="docker-compose"
 alias dcls="docker container ls --format 'table {{.ID}}\t⎥ {{.Image}}\t⎥ {{.Names}}'"
 alias dclsa="docker container ls -a --format 'table {{.ID}}\t⎥ {{.Image}}\t⎥ {{.Names}}'"
 alias dclsap="docker container ls -a --format 'table {{.ID}}\t⎥ {{.Image}}\t⎥ {{.Command}}\t⎥ {{.RunningFor}}\t⎥ {{.Status}}\t⎥ {{.Ports}}\t⎥ {{.Names}}'"
+
+dcon() {
+	if [[ "$1" == "ls" ]]; then
+		echo "Running Containers:"
+		if [[ "$2" == "names" ]]; then
+			# Only print the 'names'
+			docker container ls --format "table {{.Names}}"
+		elif [[ "$2" == "all" ]]; then
+		# Print all the things
+			docker container ls --format "table {{.ID}}\t⎥ {{.Image}}\t⎥ {{.Command}}\t⎥ {{.RunningFor}}\t⎥ {{.Status}}\t⎥ {{.Ports}}\t⎥ {{.Names}}"
+		else
+			# Print minimal info
+			# Print minimal info
+			docker container ls --format "table {{.ID}}\t⎥ {{.Image}}\t⎥ {{.Names}}"
+		fi
+	elif [[ "$1" == "lsa" ]]; then
+			echo "ALL Containers:"
+		if [[ "$2" == "names" ]]; then
+			# Only print the 'names'
+			docker container ls -a --format "table {{.Names}}"
+		elif [[ "$2" == "all" ]]; then
+			# Print all the things
+			docker container ls -a --format "table {{.ID}}\t⎥ {{.Image}}\t⎥ {{.Command}}\t⎥ {{.RunningFor}}\t⎥ {{.Status}}\t⎥ {{.Ports}}\t⎥ {{.Names}}"
+		else
+			# Print minimal info
+			docker container ls -a --format "table {{.ID}}\t⎥ {{.Image}}\t⎥ {{.Names}}"
+		fi
+	else
+		echo "INFO: A prettier way to list docker containers"
+		echo "Options:"
+		echo "  ls   : Only List running containers with basic info"
+		echo "  lsa  : List ALL containers with basic info"
+		echo "  help : Print this info"
+		echo "  Sub-Options:"
+		echo "    names : Print container names"
+		echo "    all   : Print all container info"
+		return
+	fi
+}
+
 
 # Laravel Alias
 alias q="php artisan"

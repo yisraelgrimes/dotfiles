@@ -14,7 +14,11 @@ include() { [[ -f "$1" ]] && source "$1"; }
 # VSCode command line path
 CODE="/Applications/Visual Studio Code.app/Contents/Resources/app/bin"
 
-export PATH="$PATH:$CODE"
+MYSQL="/usr/local/opt/mysql@5.7/bin"
+
+BREW="/usr/local/sbin"
+
+export PATH="$CODE:$BREW:$MYSQL:$PATH"
 
 # #####################################
 # zsh options

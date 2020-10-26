@@ -13,5 +13,5 @@ black_suffix = ".lnk", ".pst", ".swp", ".temp", ".tmp"
 max_size = 0
 
 [Directory]
-black_name = ".cache", ".node-gyp", "bower_components", "node_modules", ".next", "vendor"
+black_name = ".cache", ".node-gyp", "bower_components", "node_modules", ".next", "vendor", "no_sync"
 [EA]

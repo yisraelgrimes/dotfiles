@@ -202,3 +202,43 @@ else # provide paths at command-line
 	rsync -aPv "$1/" "$2/PhotosBackup/$bt/"
 fi
 }
+
+
+# #####################################
+# Noise
+# #####################################
+noise () {
+	sounds=(
+		"Basso"
+		"Blow"
+		"Bottle"
+		"Frog"
+		"Funk"
+		"Glass"
+		"Hero"
+		"Morse"
+		"Ping"
+		"Pop"
+		"Purr"
+		"Sosumi"
+		"Submarine"
+		"Tink"
+	)
+	if [[ -z "$1" || "$1" == "-h" ]]; then
+		echo "Play a system alert sound by passing in a sound from the below list as the option:"
+		for sound in "${sounds[@]}"
+		do
+			echo "$sound"
+		done
+		return
+	fi
+
+	if [[ "${sounds[@]}" =~ "${1}" ]]; then
+		echo "$1 matches"
+		afplay "/System/Library/Sounds/$1.aiff"
+	else
+		echo "This doesn't match one of the alert sounds:"
+		noise -h
+	fi
+
+}

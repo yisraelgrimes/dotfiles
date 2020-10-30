@@ -342,6 +342,8 @@ dcon() {
 	fi
 }
 
+# Magento alias for local dev
+alias m=bin/magento
 
 # Laravel Alias
 alias q="php artisan"

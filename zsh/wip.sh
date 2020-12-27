@@ -242,3 +242,65 @@ noise () {
 	fi
 
 }
+
+
+# #####################################
+# Create a "Scratch" file for testing something
+# #####################################
+
+scratch() {
+	base_file="$HOME/Desktop/scratch"
+	type="$1"
+
+	_create_html() {
+		{
+			echo "<!doctype html>"
+			echo "<html lang=\"en\">"
+			echo "<head>"
+			echo "	<meta charset=\"utf-8\">"
+			echo "	<title>Scratch File</title>"
+			echo "	<meta name=\"description\" content=\"\">"
+			echo "	<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">"
+			echo "</head>"
+			echo ""
+			echo "<body>"
+			echo "	<h1>This is a Scratch File</h1>"
+			echo ""
+			echo "</body>"
+			echo ""
+			echo "</html>"
+		} >> "$base_file.$type"
+	}
+
+	_create_sh() {
+		{
+			echo "#!/bin/bash"
+			echo ""
+			echo "echo \"hello world!\""
+		} >> "$base_file.$type"
+	}
+
+	if [[ -z "$1" ]]; then
+		echo "Create a scratch file for testings something in your code editor"
+		return
+	fi
+
+	if [[ ! -f "$base_file.$type" ]]; then
+
+		if [[ "$type" == "html" ]]; then
+			_create_html
+
+		elif [[ "$type" == "sh" ]]; then
+			_create_sh
+
+		else
+			touch "$base_file.$type"
+		fi
+
+		editor "$base_file.$type"
+
+	else
+		editor "$base_file.$type"
+	fi
+
+}

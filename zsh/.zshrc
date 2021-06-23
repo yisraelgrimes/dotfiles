@@ -53,13 +53,19 @@ ZSH_THEME="simple"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(
-	git
-	zsh-syntax-highlighting
-	zsh-autosuggestions
-)
+# plugins=(
+# 	git
+#	zsh-syntax-highlighting
+#	zsh-autosuggestions
+#)
 
 source $ZSH/oh-my-zsh.sh
+
+# Add syntax highlighting
+source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+
+# Add auto-completions
+source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 
 # Use Case Insensitive Globbing
 setopt NO_CASE_GLOB

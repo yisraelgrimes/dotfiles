@@ -17,9 +17,15 @@ CODE="/Applications/Visual Studio Code.app/Contents/Resources/app/bin"
 
 MYSQL="/usr/local/opt/mysql@5.7/bin"
 
-BREW="/usr/local/sbin"
+eval $(/opt/homebrew/bin/brew shellenv)
+# BREW="/usr/local/sbin"
 
-export PATH="$CODE:$BREW:$MYSQL:$PATH"
+# export PATH="$CODE:$BREW:$MYSQL:$PATH"
+export PATH="$CODE:$MYSQL:$PATH"
+
+# From NVM install script
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 
 # #####################################
 # zsh options

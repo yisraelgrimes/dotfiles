@@ -294,9 +294,6 @@ alias pbuddy="/usr/libexec/PlistBuddy"
 # Shorcut for 'brew cask'
 alias cask="brew cask"
 
-# TheFuck
-eval "$(thefuck --alias)"
-
 # Use the Hub CLI instead of the Standard Git CLI
 alias git=hub
 
@@ -487,6 +484,10 @@ openzsh_all() {
 	editor "$ZDOTDIR/.zshrc"
 	editor "$ZDOTDIR/wip.sh"
 	editor "$ZDOTDIR/git-commands.sh"
+}
+
+openzsh_history() {
+	editor "$HISTFILE"
 }
 
 # Check open ports

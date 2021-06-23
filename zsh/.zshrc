@@ -157,6 +157,9 @@ include "$HOME/_dotfiles/zsh/wip.sh"
 # Get the computer name as a variable
 MACNAME="$(networksetup -getcomputername)"
 
+# Use Rosetta 2 Shell
+alias rosetta="arch -x86_64 zsh"
+
 # Clear terminal window
 alias c="clear"
 

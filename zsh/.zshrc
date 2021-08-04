@@ -300,6 +300,12 @@ alias git=hub
 # Gulp alias
 alias g=gulp
 
+# Fortran alias
+alias gf=gfortran
+
+# Python 3 alias
+alias py=python3
+
 # Set Preferred Code Editor
 EDITOR="code"
 

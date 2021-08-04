@@ -1,8 +1,15 @@
-#! /usr/bin/zsh
+#!/bin/bash
+
 # Sourced by .bash_profile
 # Used to create shortcuts for current/frequently used projects.
 # #####################################
 
+# CLI Feedback
+_CAUTION() { echo "❓❓  ""$*"; }
+_STARTING() { echo "🚀  Starting => ""$*"; }
+_SUCCESS() { echo "✅  ""$*""  ✅"; }
+_FINISHED() { echo "🎉  Finished => ""$*""  🎉"; }
+_INFO() { echo "ℹ️  ""$*""  ℹ️"; }
 
 # Copy String
 pb() {
